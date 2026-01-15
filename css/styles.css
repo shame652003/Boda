@@ -199,7 +199,6 @@ body {
     letter-spacing: 1px;
     color: var(--color-text-dark);
 }
-
 /* --- RSVP con Validaciones --- */
 .rsvp-section {
     padding: 5rem 1rem;
@@ -223,9 +222,11 @@ body {
     text-align: left;
 }
 
+/* FORM GROUP */
 .form-group {
     display: flex;
     flex-direction: column;
+    margin-bottom: 15px;
 }
 
 .form-group label {
@@ -234,7 +235,8 @@ body {
     color: var(--color-text-dark);
 }
 
-input, select {
+input,
+select {
     width: 100%;
     padding: 1rem;
     border: 1px solid var(--color-accent-secondary);
@@ -245,26 +247,23 @@ input, select {
     transition: border-color 0.3s;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
     outline: none;
     border-color: var(--color-text-gold);
     background-color: var(--color-white);
 }
 
-.form-text {
-    font-size: 0.8rem;
-    color: #777;
-    margin-top: 0.3rem;
-}
-
+/* ERRORES */
 .error-message {
     color: var(--color-error);
     font-size: 0.85rem;
     margin-top: 0.3rem;
-    display: none; /* Oculto por defecto */
+    display: none;
 }
 
-.form-group.error input, .form-group.error select {
+.form-group.error input,
+.form-group.error select {
     border-color: var(--color-error);
 }
 
@@ -272,6 +271,7 @@ input:focus, select:focus {
     display: block;
 }
 
+/* BOTÓN */
 .btn-primary {
     background-color: var(--color-text-gold);
     color: var(--color-white);
@@ -283,10 +283,34 @@ input:focus, select:focus {
     transition: background 0.3s, transform 0.2s;
     width: 100%;
     font-family: var(--font-body);
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+    position: relative;
+}
+
+.btn-spinner {
+    display: none;
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* FEEDBACK */
+.form-feedback {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.form-feedback.success {
+    color: #2e7d32;
+}
+
+.form-feedback.error {
+    color: #d32f2f;
 }
 
 .btn-primary:hover {

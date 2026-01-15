@@ -131,159 +131,186 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setInterval(updateCountdown, 1000);
     updateCountdown(); // Llamada inicial
-    // --- 4. Funcionalidad Dinámica y Validaciones RSVP ---
-    const rsvpForm = document.getElementById('rsvp-form');
-    const nameInput = document.getElementById('guest-name');
-    const companionsSelect = document.getElementById('guest-companions');
-    const companionsContainer = document.getElementById('companions-container');
-    const formFeedback = document.getElementById('form-feedback');
 
-    // Lista de opciones para el parentesco
-    const relationshipOptions = [
-        { value: '', text: 'Selecciona parentesco...' },
-        { value: 'Pareja', text: 'Esposo/a / Pareja' },
-        { value: 'Hijo', text: 'Hijo/a' },
-        { value: 'Padre', text: 'Padre / Madre' },
-        { value: 'Hermano', text: 'Hermano/a' },
-        { value: 'Familiar', text: 'Otro Familiar (Tío, Primo, Abuelo)' },
-        { value: 'Amigo', text: 'Amigo/a' }
-    ];
+    // ============================
+// VARIABLES
+// ============================
+const rsvpForm = document.getElementById('rsvp-form');
+const nameInput = document.getElementById('guest-name');
+const companionsSelect = document.getElementById('guest-companions');
+const companionsContainer = document.getElementById('companions-container');
+const formFeedback = document.getElementById('form-feedback');
 
-    // Función auxiliar para mostrar errores
-    function showError(inputElement, message) {
-        const formGroup = inputElement.parentElement;
-        // Si no existe un span de error, lo creamos dinámicamente (útil para campos generados)
-        let errorSpan = formGroup.querySelector('.error-message');
-        if (!errorSpan) {
-            errorSpan = document.createElement('span');
-            errorSpan.className = 'error-message';
-            formGroup.appendChild(errorSpan);
-        }
-        formGroup.classList.add('error');
-        errorSpan.innerText = message;
-    }
+const submitBtn = document.getElementById('submit-btn');
+const btnText = submitBtn.querySelector('.btn-text');
+const btnSpinner = submitBtn.querySelector('.btn-spinner');
 
-    // Función auxiliar para limpiar errores
-    function clearError(inputElement) {
-        const formGroup = inputElement.parentElement;
-        formGroup.classList.remove('error');
-        const errorSpan = formGroup.querySelector('.error-message');
-        if (errorSpan) errorSpan.innerText = ''; // Limpiar texto
-    }
+// ============================
+// OPCIONES DE PARENTESCO
+// ============================
+const relationshipOptions = [
+    { value: '', text: 'Selecciona parentesco...' },
+    { value: 'Pareja', text: 'Esposo/a / Pareja' },
+    { value: 'Hijo', text: 'Hijo/a' },
+    { value: 'Padre', text: 'Padre / Madre' },
+    { value: 'Hermano', text: 'Hermano/a' },
+    { value: 'Familiar', text: 'Otro Familiar' },
+    { value: 'Amigo', text: 'Amigo/a' }
+];
 
-    // --- LÓGICA DINÁMICA: Generar campos de acompañantes ---
-    companionsSelect.addEventListener('change', function() {
-        const count = parseInt(this.value);
-        companionsContainer.innerHTML = ''; // Limpiar contenedor anterior
+// ============================
+// FUNCIONES DE ERROR
+// ============================
+function showError(input, message) {
+    const group = input.parentElement;
+    group.classList.add('error');
+    group.querySelector('.error-message').innerText = message;
+}
 
-        for (let i = 1; i <= count; i++) {
-            // Crear estructura HTML para cada acompañante
-            const div = document.createElement('div');
-            div.className = 'companion-group';
-            
-            // Generar opciones del select de parentesco
-            let optionsHtml = '';
-            relationshipOptions.forEach(opt => {
-                optionsHtml += `<option value="${opt.value}">${opt.text}</option>`;
-            });
+function clearError(input) {
+    const group = input.parentElement;
+    group.classList.remove('error');
+    group.querySelector('.error-message').innerText = '';
+}
 
-            div.innerHTML = `
+// ============================
+// SOLO LETRAS EN EL NOMBRE
+// ============================
+nameInput.addEventListener('input', () => {
+    nameInput.value = nameInput.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '');
+    clearError(nameInput);
+});
+
+// ============================
+// CAMPOS DINÁMICOS ACOMPAÑANTES
+// ============================
+companionsSelect.addEventListener('change', function () {
+    companionsContainer.innerHTML = '';
+    const count = parseInt(this.value);
+
+    for (let i = 1; i <= count; i++) {
+        let options = '';
+        relationshipOptions.forEach(opt => {
+            options += `<option value="${opt.value}">${opt.text}</option>`;
+        });
+
+        companionsContainer.innerHTML += `
+            <div class="companion-group">
                 <h4>Acompañante ${i}</h4>
-                <div class="companion-row">
-                    <div class="form-group">
-                        <label>Nombre Completo *</label>
-                        <input type="text" class="comp-name" placeholder="Nombre del acompañante" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Parentesco *</label>
-                        <select class="comp-relation" required>
-                            ${optionsHtml}
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label>Nombre Completo *</label>
+                    <input type="text" class="comp-name" required>
+                    <span class="error-message"></span>
                 </div>
-            `;
-            companionsContainer.appendChild(div);
-        }
-        
-        // Refrescar ScrollTrigger si es necesario (por el cambio de altura)
-        ScrollTrigger.refresh();
-    });
+                <div class="form-group">
+                    <label>Parentesco *</label>
+                    <select class="comp-relation" required>
+                        ${options}
+                    </select>
+                    <span class="error-message"></span>
+                </div>
+            </div>
+        `;
+    }
+});
 
-    // --- VALIDACIÓN Y ENVÍO ---
-    nameInput.addEventListener('input', () => {
-        if (nameInput.value.trim() !== '') clearError(nameInput);
-    });
+// ============================
+// ENVÍO DEL FORMULARIO
+// ============================
+rsvpForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    let isValid = true;
+    formFeedback.innerText = '';
+    formFeedback.className = 'form-feedback';
 
-    rsvpForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        let isValid = true;
-        formFeedback.innerText = '';
-        formFeedback.className = 'form-feedback';
+    const nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
 
-        // 1. Validar Nombre del Invitado Principal
-        if (nameInput.value.trim() === '') {
-            showError(nameInput, 'Por favor, ingresa tu nombre completo.');
+    // Validar nombre principal
+    if (nameInput.value.trim() === '') {
+        showError(nameInput, 'Ingresa tu nombre.');
+        isValid = false;
+    } else if (!nameRegex.test(nameInput.value.trim())) {
+        showError(nameInput, 'Solo letras permitidas.');
+        isValid = false;
+    }
+
+    // Validar acompañantes
+    const compNames = document.querySelectorAll('.comp-name');
+    const compRelations = document.querySelectorAll('.comp-relation');
+
+    compNames.forEach((input) => {
+        if (input.value.trim() === '') {
+            showError(input, 'Ingresa el nombre.');
             isValid = false;
-        } else {
-            clearError(nameInput);
-        }
-
-        // 2. Validar Campos Dinámicos (si existen)
-        const compNames = document.querySelectorAll('.comp-name');
-        const compRelations = document.querySelectorAll('.comp-relation');
-
-        compNames.forEach((input, index) => {
-            if (input.value.trim() === '') {
-                showError(input, 'Ingresa el nombre.');
-                isValid = false;
-            } else {
-                clearError(input);
-            }
-        });
-
-        compRelations.forEach((select, index) => {
-            if (select.value === '') {
-                showError(select, 'Selecciona parentesco.');
-                isValid = false;
-            } else {
-                clearError(select);
-            }
-        });
-
-        if (isValid) {
-            const guestName = nameInput.value.trim();
-            const guestCount = companionsSelect.value;
-            
-            // NÚMERO DE WHATSAPP (REEMPLAZAR AQUÍ)
-            const targetPhoneNumber = "+584245994530"; 
-            
-            // Construir Mensaje
-            let message = `¡Hola! Iris y Pedro Soy  *${guestName}*. \nConfirmo mi asistencia para la boda de Pedro & Iris el 14 de Febrero. 💍\n`;
-
-            if (guestCount > 0) {
-                message += `\nAsistiré con *${guestCount} acompañante(s)*:\n`;
-                compNames.forEach((input, index) => {
-                    const name = input.value.trim();
-                    const relation = compRelations[index].options[compRelations[index].selectedIndex].text;
-                    message += `👤 ${name} (${relation})\n`;
-                });
-            } else {
-                message += `\nAsistiré sin acompañantes.`;
-            }
-            
-            const url = `https://wa.me/${targetPhoneNumber}?text=${encodeURIComponent(message)}`;
-            
-            formFeedback.innerText = '¡Todo listo! Abriendo WhatsApp...';
-            formFeedback.classList.add('success');
-            
-            setTimeout(() => {
-                window.open(url, '_blank');
-                // Opcional: rsvpForm.reset(); companionsContainer.innerHTML = '';
-            }, 1500);
-
-        } else {
-             formFeedback.innerText = 'Por favor, completa todos los campos requeridos.';
-             formFeedback.classList.add('error');
         }
     });
+
+    compRelations.forEach((select) => {
+        if (select.value === '') {
+            showError(select, 'Selecciona parentesco.');
+            isValid = false;
+        }
+    });
+
+    // ============================
+    // SI TODO ES VÁLIDO
+    // ============================
+    if (isValid) {
+        submitBtn.disabled = true;
+        btnText.style.display = 'none';
+        btnSpinner.style.display = 'inline-block';
+
+        const guestName = nameInput.value.trim();
+        const guestCount = companionsSelect.value;
+        const phone = "+584245994530";
+
+      let message = `CONFIRMACION DE ASISTENCIA
+
+        Hola, un gusto saludarlos.
+        Soy ${guestName} y confirmo con alegria mi asistencia a la boda de Pedro & Iris.
+
+        Fecha: 14 de Febrero
+        Evento: Boda
+
+        `;
+
+        if (guestCount > 0) {
+            message += `Acompanantes (${guestCount}):\n`;
+            compNames.forEach((input, i) => {
+                const relation = compRelations[i].options[compRelations[i].selectedIndex].text;
+                message += ` - ${input.value} (${relation})\n`;
+            });
+        } else {
+            message += `Asistire sin acompanantes.\n`;
+        }
+
+        message += `\nMuchas gracias por la invitacion, alli estaremos.`;
+
+
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+        formFeedback.innerText = 'Redirigiendo a WhatsApp...';
+        formFeedback.classList.add('success');
+
+        setTimeout(() => {
+            if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                window.location.href = url;
+            } else {
+                window.open(url, '_blank');
+            }
+
+            rsvpForm.reset();
+            companionsContainer.innerHTML = '';
+            formFeedback.innerText = '';
+
+            submitBtn.disabled = false;
+            btnText.style.display = 'inline';
+            btnSpinner.style.display = 'none';
+        }, 2000);
+    } else {
+        formFeedback.innerText = 'Completa todos los campos.';
+        formFeedback.classList.add('error');
+    }
+});
+
 });

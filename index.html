@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boda Pedro & Iris | 14.02.2026</title>
+    <title>Boda Pedro & Iris | 14/02/2026</title>
     <meta name="description" content="Invitación de Boda Digital de Pedro e Iris">
     <link rel="icon" href="assets/icons/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,7 @@
             <div class="ornament-divider gs-reveal">
                 <img src="assets/img/divider-ornament.png" alt="Ornamento">
             </div>
-            <h1 class="couple-names gs-reveal">Pedro Julio <br> E <br> Iris del Mar</h1>
+            <h1 class="couple-names gs-reveal">Pedro<br> E <br> Iris</h1>
             <p class="intro-text gs-reveal">TENEMOS EL PLACER DE INVITARLE(S) A CELEBRAR NUESTRO ENLACE MATRIMONIAL</p>
             
             <div class="date-location gs-reveal">
@@ -41,7 +41,7 @@
 
                     <p class="place">LA BARRA DE DOMINGO</p>
                     <p class="time">6:00 P.M.</p>
-                </div>
+                </div>  
             </div>
             
             <div class="valid-for gs-reveal">
@@ -72,37 +72,41 @@
         </div>
     </section>
 
- <section class="rsvp-section gs-scroll" id="rsvp">
-        <div class="container">
-            <h2 class="section-title">Confirmar Asistencia</h2>
-            <p class="rsvp-text">Por favor, confirma tu asistencia antes del 1 de febrero.</p>
-            
-            <form id="rsvp-form" class="rsvp-form" novalidate>
-                <div class="form-group">
-                    <label for="guest-name">Tu Nombre Completo *</label>
-                    <input type="text" id="guest-name" name="guest-name" placeholder="Escribe tu nombre" required>
-                    <span class="error-message" id="name-error"></span>
-                </div>
+<section class="rsvp-section gs-scroll" id="rsvp">
+    <div class="container">
+        <h2 class="section-title">Confirmar Asistencia</h2>
+        <p class="rsvp-text">Por favor, confirma tu asistencia antes del 1 de febrero.</p>
 
-                <div class="form-group">
-                    <label for="guest-companions">Acompañantes</label>
-                    <select id="guest-companions" name="guest-companions">
-                        <option value="0">Asistiré solo/a</option>
-                        <option value="1">1 Acompañante</option>
-                        <option value="2">2 Acompañantes</option>
-                    </select>
-                </div>
+        <form id="rsvp-form" class="rsvp-form" novalidate>
+            <div class="form-group">
+                <label for="guest-name">Tu Nombre Completo *</label>
+                <input type="text" id="guest-name" placeholder="Escribe tu nombre" required>
+                <span class="error-message"></span>
+            </div>
 
-                <div id="companions-container"></div>
-                
-                <button type="submit" class="btn-primary">
-                    Confirmar por WhatsApp <i class="fa-brands fa-whatsapp"></i>
-                </button>
-                
-                <div id="form-feedback" class="form-feedback"></div>
-            </form>
-        </div>
-    </section>
+            <div class="form-group">
+                <label for="guest-companions">Acompañantes</label>
+                <select id="guest-companions">
+                    <option value="0">Asistiré solo/a</option>
+                    <option value="1">1 Acompañante</option>
+                    <option value="2">2 Acompañantes</option>
+                </select>
+            </div>
+
+            <div id="companions-container"></div>
+
+            <button type="submit" class="btn-primary" id="submit-btn">
+                <span class="btn-text">Confirmar por WhatsApp</span>
+                <span class="btn-spinner">
+                    <i class="fa fa-spinner fa-spin"></i>
+                </span>
+            </button>
+
+            <div id="form-feedback" class="form-feedback"></div>
+        </form>
+    </div>
+</section>
+
 
     <footer>
         <p>Pedro & Iris © 2026</p>
