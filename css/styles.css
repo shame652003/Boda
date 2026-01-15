@@ -1,11 +1,12 @@
 :root {
-    --color-vinotinto: #800020; /* Borgoña profundo */
-    --color-vinotinto-dark: #4a0012;
-    --color-beige: #F5F5DC;
-    --color-gold: #D4AF37; /* Un toque sutil de dorado para acentos */
+    --color-bg: #F6F5EC; /* Blanco roto */
+    --color-accent-main: #B20979; /* Magenta/Fucsia */
+    --color-accent-secondary: #E1DACA; /* Beige/Gris cálido */
+    --color-text-gold: #C5A059; /* Dorado */
+    --color-text-dark: #4a0012; /* Marrón oscuro */
     --color-white: #ffffff;
-    --color-text: #2c2c2c;
-    
+    --color-error: #d9534f;
+
     --font-heading: 'Great Vibes', cursive;
     --font-body: 'Playfair Display', serif;
 }
@@ -18,9 +19,11 @@
 
 body {
     font-family: var(--font-body);
-    background-color: var(--color-white);
-    color: var(--color-text);
+    background-color: var(--color-bg);
+    color: var(--color-text-dark);
     overflow-x: hidden;
+    line-height: 1.6;
+    scrollbar-width: none; 
 }
 
 /* --- Canvas Lluvia de Rosas --- */
@@ -30,47 +33,49 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    z-index: 1; /* Encima del fondo, detrás del texto */
-    pointer-events: none; /* Permite hacer click a través de la lluvia */
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.6; /* Ajustar opacidad de la lluvia */
 }
 
-/* --- Hero Section --- */
+/* --- Hero Section (Portada) --- */
 .hero {
     position: relative;
-    height: 100vh;
+    min-height: 100vh; /* Asegura que cubra al menos toda la pantalla */
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    /* Coloca aquí la ruta de tu imagen de fondo */
-    background: url('../assets/img/hero-bg.png') no-repeat center center/cover; 
+    /* Usar la imagen de fondo proporcionada o similar */
+    background: url('../assets/img/hero-bg.jpg') no-repeat center top/cover; 
     overflow: hidden;
+    padding: 2rem 1rem;
 }
 
-/* Overlay para oscurecer un poco la foto y que se lea el texto */
 .hero-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.3); /* Capa clara para estilo 'High Key' */
-    backdrop-filter: blur(2px);
+    background: rgba(246, 245, 236, 0.7); /* Capa clara basada en el color de fondo */
     z-index: 0;
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
-    padding: 2rem;
-    color: var(--color-vinotinto-dark);
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.85); /* Fondo semi-transparente para el texto */
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 2px solid var(--color-accent-secondary); /* Borde sutil */
 }
 
-.intro-text {
-    font-size: 1rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+.ornament-divider img {
+    max-width: 200px;
     margin-bottom: 1rem;
 }
 
@@ -78,29 +83,62 @@ body {
     font-family: var(--font-heading);
     font-size: 4.5rem;
     line-height: 1.2;
-    color: var(--color-vinotinto);
-    margin-bottom: 0.5rem;
+    color: var(--color-text-gold);
+    margin-bottom: 1rem;
 }
 
-.full-names {
+.intro-text {
     font-size: 1.1rem;
-    font-style: italic;
-    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2.5rem;
+    color: var(--color-text-dark);
 }
 
-.date-divider {
-    font-size: 1.5rem;
-    color: var(--color-gold);
+.date-location {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 3rem;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    border-top: 1px solid var(--color-text-gold);
+    border-bottom: 1px solid var(--color-text-gold);
+    padding: 2rem 0;
 }
 
-.date-divider i {
-    font-size: 0.8rem;
-    color: var(--color-vinotinto);
+.date-info, .location-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.day, .month-year, .time, .place {
+    font-size: 1.2rem;
+    color: var(--color-text-dark);
+}
+
+.date-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--color-text-gold);
+    line-height: 1;
+    margin: 0.5rem 0;
+}
+
+.toast-icon {
+    font-size: 2rem;
+    color: var(--color-text-gold);
+    margin: 1rem 0;
+}
+
+.valid-for {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background-color: var(--color-accent-secondary);
+    color: var(--color-text-dark);
+    font-weight: bold;
+    border-radius: 50px;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
 }
 
 .hero-cta {
@@ -118,16 +156,16 @@ body {
 /* --- Countdown --- */
 .countdown-section {
     padding: 4rem 1rem;
-    background-color: var(--color-vinotinto);
-    color: var(--color-beige);
+    background-color: var(--color-bg);
     text-align: center;
+    border-top: 1px solid var(--color-accent-secondary);
 }
 
 .section-title {
     font-family: var(--font-heading);
     font-size: 3rem;
     margin-bottom: 2rem;
-    color: var(--color-gold);
+    color: var(--color-text-gold);
 }
 
 .timer-container {
@@ -141,148 +179,146 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(255,255,255,0.1);
+    background: var(--color-white);
     padding: 1rem;
     border-radius: 8px;
     min-width: 80px;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid var(--color-accent-secondary);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
 }
 
 .time-box span {
     font-size: 2rem;
     font-weight: 700;
+    color: var(--color-text-gold);
 }
 
 .time-box p {
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1px;
+    color: var(--color-text-dark);
 }
 
-/* --- Detalles --- */
-.details-section {
-    padding: 5rem 1rem;
-    background-color: var(--color-beige);
-    text-align: center;
-}
-
-.details-section .section-title {
-    color: var(--color-vinotinto);
-}
-
-.timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.event-card {
-    background: var(--color-white);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border-left: 4px solid var(--color-vinotinto);
-}
-
-.icon-wrapper {
-    font-size: 2rem;
-    color: var(--color-vinotinto);
-    margin-bottom: 1rem;
-}
-
-.event-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--color-vinotinto-dark);
-}
-
-.time {
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-}
-
-.map-link {
-    display: inline-block;
-    margin-top: 1rem;
-    color: var(--color-vinotinto);
-    text-decoration: none;
-    border-bottom: 1px solid var(--color-vinotinto);
-    padding-bottom: 2px;
-    transition: all 0.3s ease;
-}
-
-.map-link:hover {
-    color: var(--color-gold);
-    border-color: var(--color-gold);
-}
-
-/* --- RSVP --- */
+/* --- RSVP con Validaciones --- */
 .rsvp-section {
     padding: 5rem 1rem;
     text-align: center;
     background-color: var(--color-white);
+    border-top: 1px solid var(--color-accent-secondary);
 }
 
 .rsvp-text {
     max-width: 600px;
     margin: 0 auto 2rem;
-    line-height: 1.6;
+    font-size: 1.1rem;
 }
 
 .rsvp-form {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    max-width: 400px;
+    gap: 1.5rem;
+    max-width: 500px;
     margin: 0 auto;
+    text-align: left;
 }
 
-input {
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--color-text-dark);
+}
+
+input, select {
     width: 100%;
     padding: 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-accent-secondary);
     border-radius: 5px;
     font-family: var(--font-body);
     font-size: 1rem;
+    background-color: var(--color-bg);
+    transition: border-color 0.3s;
 }
 
-input:focus {
+input:focus, select:focus {
     outline: none;
-    border-color: var(--color-vinotinto);
+    border-color: var(--color-text-gold);
+    background-color: var(--color-white);
+}
+
+.form-text {
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 0.3rem;
+}
+
+.error-message {
+    color: var(--color-error);
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    display: none; /* Oculto por defecto */
+}
+
+.form-group.error input, .form-group.error select {
+    border-color: var(--color-error);
+}
+
+.form-group.error .error-message {
+    display: block;
 }
 
 .btn-primary {
-    background-color: var(--color-vinotinto);
+    background-color: var(--color-text-gold);
     color: var(--color-white);
     padding: 1rem 2rem;
     border: none;
     border-radius: 50px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
     width: 100%;
     font-family: var(--font-body);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .btn-primary:hover {
-    background-color: var(--color-vinotinto-dark);
+    background-color: #b38f4d; /* Un tono más oscuro del dorado */
+    transform: translateY(-2px);
 }
+
+.form-feedback {
+    margin-top: 1rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.form-feedback.success { color: green; }
+.form-feedback.error { color: var(--color-error); }
 
 footer {
     padding: 2rem;
     text-align: center;
-    font-size: 0.8rem;
-    background-color: var(--color-beige);
-    color: var(--color-vinotinto-dark);
+    font-size: 0.9rem;
+    background-color: var(--color-bg);
+    color: var(--color-text-dark);
+    border-top: 1px solid var(--color-accent-secondary);
 }
 
 /* Media Queries para Desktop */
 @media (min-width: 768px) {
-    .couple-names { font-size: 7rem; }
-    .timeline { flex-direction: row; justify-content: center; }
-    .event-card { flex: 1; }
+    .hero-content { padding: 4rem 3rem; }
+    .couple-names { font-size: 6rem; }
+    .date-location { flex-direction: row; justify-content: center; gap: 4rem; }
+    .date-info, .location-info { flex: 1; }
+    .date-location > div:first-child { border-right: 1px solid var(--color-text-gold); padding-right: 2rem; }
+    .date-location > div:last-child { padding-left: 2rem; }
+    .rsvp-form { padding: 2rem; border: 1px solid var(--color-accent-secondary); border-radius: 10px; }
 }

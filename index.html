@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boda Pedro & Iris | 14.02.2026</title>
-    <meta name="description" content="Invitación de Boda Digital de Pedro Julio Pérez Guillen e Iris del Mar Chevez Juárez">
+    <meta name="description" content="Invitación de Boda Digital de Pedro e Iris">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="icon" href="assets/icons/favicon.ico">
+    
     <link rel="stylesheet" href="css/styles.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -21,17 +21,32 @@
     <header class="hero" id="inicio">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <p class="intro-text gs-reveal">Con la bendición de Dios y nuestros padres, nos casamos</p>
-            <p class="couple-names gs-reveal">Pedro & Iris</p>
-            <p class="full-names gs-reveal">Pedro Julio Pérez Guillen & Iris del Mar Chevez Juárez</p>
-            <div class="date-divider gs-reveal">
-                <span>14</span>
-                <i class="fa-solid fa-heart"></i>
-                <span>02</span>
-                <i class="fa-solid fa-heart"></i>
-                <span>26</span>
+            <div class="ornament-divider gs-reveal">
+                <img src="assets/img/divider-ornament.png" alt="Ornamento">
             </div>
-            <p class="hero-cta gs-reveal">Desliza para ver más</p>
+            <h1 class="couple-names gs-reveal">Pedro Julio <br> E <br> Iris del Mar</h1>
+            <p class="intro-text gs-reveal">TENEMOS EL PLACER DE INVITARLE(S) A CELEBRAR NUESTRO ENLACE MATRIMONIAL</p>
+            
+            <div class="date-location gs-reveal">
+                <div class="date-info">
+                    <span class="day">SÁBADO</span>
+                    <span class="date-number">14</span>
+                    <span class="month-year">FEBRERO 2026</span>
+                    <span class="time">5:00 P.M.</span>
+                </div>
+                <div class="location-info">
+                     <div class="toast-icon"><i class="fa-solid fa-church"></i></div>
+                    <p class="place">IGLESIA SAN FRANCISCO DE ASÍS</p>
+                    <div class="toast-icon"><i class="fa-solid fa-wine-glass"></i></i></div>
+
+                    <p class="place">LA BARRA DE DOMINGO</p>
+                    <p class="time">6:00 P.M.</p>
+                </div>
+            </div>
+            
+            <div class="valid-for gs-reveal">
+                 <p class="hero-cta gs-reveal">Desliza para ver más</p>
+            </div>
         </div>
     </header>
 
@@ -57,50 +72,40 @@
         </div>
     </section>
 
-    <section class="details-section">
-        <div class="container">
-            <h2 class="section-title gs-scroll">Nuestra Boda</h2>
-            
-            <div class="timeline">
-                <div class="event-card gs-scroll-left">
-                    <div class="icon-wrapper">
-                        <i class="fa-solid fa-church"></i>
-                    </div>
-                    <h3>Ceremonia Religiosa</h3>
-                    <p class="time">5:00 PM</p>
-                    <p class="location">Iglesia San Francisco de Asís</p>
-                    <a href="https://www.google.com/maps/place/PARROQUIA+SAN+FRANCISCO/@9.7748823,-70.0783823,10z/data=!4m10!1m2!2m1!1sIglesia+San+Francisco+de+Asis!3m6!1s0x8e7d709507c34153:0xbf8c383f7cdedc2b!8m2!3d9.7912!4d-69.7905364!15sCh1JZ2xlc2lhIFNhbiBGcmFuY2lzY28gZGUgQXNpc1ofIh1pZ2xlc2lhIHNhbiBmcmFuY2lzY28gZGUgYXNpc5IBBmNodXJjaJoBI0NoWkRTVWhOTUc5blMwVkpRMEZuU1VOb05YQlBYMGhCRUFF4AEA-gEECAAQPA!16s%2Fg%2F1hdzl9r_s?entry=ttu&g_ep=EgoyMDI2MDEwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-link">Ver Mapa</a>
-                </div>
-
-                <div class="event-card gs-scroll-right">
-                    <div class="icon-wrapper">
-                        <i class="fa-solid fa-wine-glass"></i>
-                    </div>
-                    <h3>Brindis y Recepción</h3>
-                    <p class="time">6:00 PM</p>
-                    <p class="location">La Barra de Domingo</p>
-                    <a href="https://maps.google.com/?q=La+Barra+de+Domingo" target="_blank" class="map-link">Ver Mapa</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="rsvp-section gs-scroll">
+ <section class="rsvp-section gs-scroll" id="rsvp">
         <div class="container">
             <h2 class="section-title">Confirmar Asistencia</h2>
-            <p class="rsvp-text">Nos encantaría que fueras parte de nuestro gran día. Por favor confirma tu asistencia antes del 1 de febrero.</p>
+            <p class="rsvp-text">Por favor, confirma tu asistencia antes del 1 de febrero.</p>
             
-            <form id="rsvp-form" class="rsvp-form">
-                <input type="text" id="guest-name" placeholder="Escribe tu nombre completo" required>
+            <form id="rsvp-form" class="rsvp-form" novalidate>
+                <div class="form-group">
+                    <label for="guest-name">Tu Nombre Completo *</label>
+                    <input type="text" id="guest-name" name="guest-name" placeholder="Escribe tu nombre" required>
+                    <span class="error-message" id="name-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="guest-companions">Acompañantes</label>
+                    <select id="guest-companions" name="guest-companions">
+                        <option value="0">Asistiré solo/a</option>
+                        <option value="1">1 Acompañante</option>
+                        <option value="2">2 Acompañantes</option>
+                    </select>
+                </div>
+
+                <div id="companions-container"></div>
+                
                 <button type="submit" class="btn-primary">
                     Confirmar por WhatsApp <i class="fa-brands fa-whatsapp"></i>
                 </button>
+                
+                <div id="form-feedback" class="form-feedback"></div>
             </form>
         </div>
     </section>
 
     <footer>
-        <p>Hecho con amor para Pedro & Iris &copy; 2026</p>
+        <p>Pedro & Iris © 2026</p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
